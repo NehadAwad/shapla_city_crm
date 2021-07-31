@@ -392,9 +392,24 @@
                               <input type="file" name="nominee_img" id="nominee-img" class="form-control">
                           </div>
 
+
                           <button type="submit" class="btn btn-primary mb-3">Submit</button>
                       </div>
                   </form>
+
+                  <form method="POST" action="/admin/updatePass/{{$user->id}}" enctype="multipart/form-data">
+                    @csrf
+                    <h2 class="text-center mb-4 mt-4">Change Password</h2>
+                    <div class="container">
+                                    
+                          <div class="form-group mb-3">
+                            <label>New Password</label>
+                            <input type="password"  name="password" id="password" class="form-control">
+                          </div>
+
+                        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                    
+                   </form>
                   </div>
                   <!-- /.tab-pane -->
                 </div>

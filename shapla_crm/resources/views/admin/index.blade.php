@@ -73,7 +73,7 @@
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>00</h3>
+              <h3>{{round($allDueAmount/12)}}</h3>
 
               <p>Total Due Amount Monthly</p>
             </div>

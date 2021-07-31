@@ -7,6 +7,7 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Jetstream\Rules\Role;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UseController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\InstallmentController;
 use Illuminate\Support\Facades\DB;
@@ -27,18 +28,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-//for user dashboard
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $users=DB::table('users')->first();
-    $installments=DB::table('installments')->get();
-    
-    $time=strtotime($users->installment_start_from);
-    $timeformate=date('d-M-Y',$time);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [UseController::class, 'Udashboard'])->name('dashboard');
 
-    return view('dashboard', compact('users', 'installments','timeformate'));
-})->name('dashboard');
-
-Route::get('/dashboard', [AdminController::class, 'UserDashBoardCal'])->name('dashboard');
 
 //for user report
 Route::middleware(['auth:sanctum', 'verified'])->get('user/user_report', function () {
@@ -80,6 +71,7 @@ Route::prefix('admin')->name('admin.')->group(function()
     Route::post('/store',[AdminController::class,'add'])->middleware('auth:admin');
 
     Route::post('/update/{id}',[AdminController::class,'update_member'])->middleware('auth:admin');
+    Route::post('/updatePass/{id}',[AdminController::class,'update_password'])->middleware('auth:admin');
 
 
     // ------------ Installment ----------------
@@ -105,6 +97,10 @@ Route::prefix('admin')->name('admin.')->group(function()
     Route::post('/show',[AdminController::class, 'store_new'])->name('store')->middleware('auth:admin');
 
     Route::get('/edit_admin/{id}',[AdminController::class,'edit_admin'])->middleware('auth:admin');
+
+
+    Route::post('/admin_update_pass/{id}',[AdminController::class,'update_admin_pass'])->middleware('auth:admin');
+
 
     Route::post('/admin_update/{id}',[AdminController::class,'update_admin'])->middleware('auth:admin');
 

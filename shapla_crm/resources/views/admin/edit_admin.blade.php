@@ -53,6 +53,21 @@
                         </div>
 
                     </form>
+                    <form method="POST" action="/admin/admin_update_pass/{{$admin->id}}" enctype="multipart/form-data">
+                        @csrf
+                        <h2 class="text-center mb-4 mt-4">Change Password</h2>
+                        <div class="container">
+                                        
+                              <div class="form-group mb-3">
+                                <label>New Password</label>
+                                <input type="password"  name="password" id="password" class="form-control">
+                              </div>
+    
+                            <button type="submit" class="btn btn-primary mb-3">Update</button>
+                        
+                       </form>
+
+                    
                 </div>
             </div>
         </section>

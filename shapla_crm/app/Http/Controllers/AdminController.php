@@ -371,6 +371,21 @@ class AdminController extends Controller
         return view('admin.admin_member_profile',compact('user', 'paid_amount', 'ins','timeformate'));
     }
 
+
+    public function update_password(Request $request,$id){
+        $add_user=User::find($id);
+
+        $add_user->password=Hash::make($request->get('password'));
+        $add_user->save();
+        if($add_user==true){
+            Session::flash('success','Update Member');
+            return redirect("admin/member/{$add_user->id}");
+        }else{
+            Session::flash('error','Update Member');
+        }
+        
+    }
+
     public function update_member(Request $request,$id){
         $validatedData = $request->validate([
             'member_name' => 'required',
@@ -570,6 +585,26 @@ class AdminController extends Controller
          $admin= Admin::find($id);
          return view('admin.edit_admin',compact('admin'));
      }
+
+
+     function update_admin_pass(Request $request,$id)
+     {
+        
+        $admin=Admin::find($id); 
+        $admin->password = Hash::make($request->get('password'));
+       
+        $admin->save();
+        if($admin){
+            Session::flash('success','Update Admin');
+            return redirect(route('admin.view_admin'));
+        }else{
+            Session::flash('error','Update Failed');
+        }
+
+     }
+
+
+
 
      function update_admin(Request $request,$id)
      {
